@@ -1,0 +1,21 @@
+[package]
+name = "indep"
+version = "0.1.0"
+authors = ["Serhii Plyhun <snuk188@gmail.com>"]
+
+description = "Depencency injection library for Rust"
+
+homepage = "github.com/snuk182/indep"
+repository = "github.com/snuk182/indep"
+
+readme = "README.md"
+
+keywords = ["di", "dependency", "injection"]
+license = "MIT"
+
+[lib]
+name = "indep"
+path = "src/lib.rs"
+
+[dependencies]
+log = "*"
