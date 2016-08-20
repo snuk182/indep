@@ -5,7 +5,6 @@ authors = ["Serhii Plyhun <snuk188@gmail.com>"]
 
 description = "Depencency injection library for Rust"
 
-homepage = "github.com/snuk182/indep"
 repository = "github.com/snuk182/indep"
 
 readme = "README.md"
