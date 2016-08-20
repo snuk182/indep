@@ -36,9 +36,9 @@ use std::fmt::{Display,Formatter,Result};
 respectively,
 and 
 ```rust
-use your_crate::{Dependency,Dependent,Implementation};
+use your_mod::{Dependency,Dependent,Implementation};
 ```
-in DI-enabled trait implementations. 
+in DI-enabled trait implementations, where your_mod is module in your project where the pool creation macro is applied.
 
 ## Dependencies
 
