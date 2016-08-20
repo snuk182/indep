@@ -2,7 +2,7 @@
 extern crate indep;
 #[macro_use]
 extern crate log;
-//`sync` mod contains DI set for multi-threaded environments (uses Rc<RefCell<>> as an abstraction).
+//`sync` mod contains DI set for single-threaded environments (uses Rc<RefCell<>> as an abstraction).
 
 //We pretend that all the DI module traits and implementations are separated into different mods.
 
