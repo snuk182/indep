@@ -216,11 +216,12 @@ use self::t2::Trait2;
 use self::t1::Trait1;
 use self::base::Base;
     
-//Initialize all the DI classes and traits  The syntax is {Base_Trait, Trait1, Trait2, ... }, where Trait# is a trait which needs to be DI-enabled.    
+//Initialize all the DI classes and traits  The syntax is {Base_Trait, Trait1, Trait2, ... }, 
+//where Trait# is a trait which needs to be DI-enabled.    
 indep_pool_sync!{Base, Trait1,Trait2,Trait3}    
 
 fn main() {
-	//`Pool` is a structure created by `indep_pool_async` macro.
+    //`Pool` is a structure created by `indep_pool_sync` macro.
     let mut pool = Pool::new();
     
     let t1 = i1::new_dep();
@@ -230,10 +231,10 @@ fn main() {
     //Here we mark this struct with a special tag so it will be injected only to similarly named member of a dependent struct.
     pool.add_tagged(t1, vec!["t1_1".to_string()]);
     //Add DI dependency with no tag, which means it will be injected to any struct that has a dependency of the corresponding trait.
-	pool.add(t2);
-	//Same here.
-	pool.add(t3);
-	
-	//`stat()` is a simple utility method of a `Pool` that shows its content name-wise.
-	println!("Pool stat: {}", pool.stat());
+    pool.add(t2);
+    //Same here.
+    pool.add(t3);
+
+    //`stat()` is a simple utility method of a `Pool` that shows its content name-wise.
+    println!("Pool stat: {}", pool.stat());
 }
