@@ -17,4 +17,4 @@ name = "indep"
 path = "src/lib.rs"
 
 [dependencies]
-log = "*"
+log = "0.3.*"
