@@ -21,20 +21,7 @@ extern crate indep;
 extern crate log;
 ```
 
-Also, depending on the sync/async version of macros, you will need several usage definitions, either:
-```rust
-use std::rc::Rc;
-use std::cell::RefCell;
-use std::fmt::{Display,Formatter,Result};
-```
-or
-```rust
-use std::sync::Arc;
-use std::sync::RwLock;
-use std::fmt::{Display,Formatter,Result};
-```
-respectively,
-and 
+Also you will need several usage definitions:
 ```rust
 use your_mod::{Dependency,Dependent,Implementation};
 ```
