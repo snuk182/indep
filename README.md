@@ -29,8 +29,8 @@ in DI-enabled trait implementations, where your_mod is module in your project wh
 
 ## Dependencies
 
-None except log, which is used only to `trace!` dependency injections.
+None except `log`, which is used only to `trace!` dependency injections.
 
 ## License
 
- * MIT
+ * MIT OR Apache-2.0
