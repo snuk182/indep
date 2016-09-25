@@ -3,12 +3,12 @@ macro_rules! indep_pool_sync {
     ($base:ty, $($tra:ident),+) => {
         pub enum Implementation {
             $(
-            $tra(Rc<RefCell<$tra>>)
+            $tra(::std::rc::Rc<::std::cell::RefCell<$tra>>)
             ),+
         }
         
-        impl Display for Implementation {
-            fn fmt(&self, f: &mut Formatter) -> Result {
+        impl ::std::fmt::Display for Implementation {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
                 match self {
                     $(&Implementation::$tra(_) => write!(f, "{}", stringify!($tra))),*
                 }
@@ -17,8 +17,8 @@ macro_rules! indep_pool_sync {
         
         pub trait Dependency {
             fn impls(&self) -> Vec<Implementation>;
-            fn as_dependent(&self) -> Rc<RefCell<Dependent>>;
-            fn as_base(&self) -> Rc<RefCell<$base>>;
+            fn as_dependent(&self) -> ::std::rc::Rc<::std::cell::RefCell<Dependent>>;
+            fn as_base(&self) -> ::std::rc::Rc<::std::cell::RefCell<$base>>;
             fn dep_id(&self) -> &'static str;
         }
         
@@ -91,7 +91,7 @@ macro_rules! indep_pool_sync {
 #[macro_export]
 macro_rules! indep_impls_sync {
     ($imp:ty, $base:ty, [$($tra:ident),+]) => {                
-        struct RcRefCellBox(Rc<RefCell<Box<$imp>>>);
+        struct RcRefCellBox(::std::rc::Rc<::std::cell::RefCell<Box<$imp>>>);
         
         impl Dependency for RcRefCellBox {
             fn impls(&self) -> Vec<Implementation> {
@@ -101,10 +101,10 @@ macro_rules! indep_impls_sync {
                     ),+
                 ]
             }
-            fn as_dependent(&self) -> Rc<RefCell<Dependent>> {
+            fn as_dependent(&self) -> ::std::rc::Rc<::std::cell::RefCell<Dependent>> {
                 self.0.clone()
             }
-            fn as_base(&self) -> Rc<RefCell<$base>> {
+            fn as_base(&self) -> ::std::rc::Rc<::std::cell::RefCell<$base>> {
                 self.0.clone()
             }
             fn dep_id(&self) -> &'static str {
@@ -118,7 +118,7 @@ macro_rules! indep_impls_sync {
 macro_rules! indep_default_new_sync {
     ($imp:ident) => {
         pub fn new_dep() -> Box<Dependency> {
-            Box::new(RcRefCellBox(Rc::new(RefCell::new(Box::new($imp::new())))))
+            Box::new(RcRefCellBox(::std::rc::Rc::new(::std::cell::RefCell::new(Box::new($imp::new())))))
         }
     }
 }
@@ -331,10 +331,6 @@ mod test {
         indep_impls_sync!{Impl3, Base, [Trait3]}
         indep_default_new_sync!{Impl3}
     }
-    
-    use std::rc::Rc;
-    use std::cell::RefCell;
-    use std::fmt::{Display,Formatter,Result};
     
     use self::t3::Trait3;
     use self::t2::Trait2;

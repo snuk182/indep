@@ -3,12 +3,12 @@ macro_rules! indep_pool_async {
     ($base:ty, $($tra:ident),+) => {
         pub enum Implementation {
             $(
-            $tra(Arc<RwLock<$tra>>)
+            $tra(::std::sync::Arc<::std::sync::RwLock<$tra>>)
             ),+
         }
         
-        impl Display for Implementation {
-            fn fmt(&self, f: &mut Formatter) -> Result {
+        impl ::std::fmt::Display for Implementation {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
                 match self {
                     $(&Implementation::$tra(_) => write!(f, "{}", stringify!($tra))),*
                 }
@@ -17,8 +17,8 @@ macro_rules! indep_pool_async {
         
         pub trait Dependency {
             fn impls(&self) -> Vec<Implementation>;
-            fn as_dependent(&self) -> Arc<RwLock<Dependent>>;
-            fn as_base(&self) -> Arc<RwLock<$base>>;
+            fn as_dependent(&self) -> ::std::sync::Arc<::std::sync::RwLock<Dependent>>;
+            fn as_base(&self) -> ::std::sync::Arc<::std::sync::RwLock<$base>>;
             fn dep_id(&self) -> &'static str;
         }
         
@@ -91,7 +91,7 @@ macro_rules! indep_pool_async {
 #[macro_export]
 macro_rules! indep_impls_async {
     ($imp:ty, $base:ty, [$($tra:ident),+]) => {
-        struct ArcRwLockBox(Arc<RwLock<Box<$imp>>>);
+        struct ArcRwLockBox(::std::sync::Arc<::std::sync::RwLock<Box<$imp>>>);
         
         impl Dependency for ArcRwLockBox {
             fn impls(&self) -> Vec<Implementation> {
@@ -101,10 +101,10 @@ macro_rules! indep_impls_async {
                     ),+
                 ]
             }
-            fn as_dependent(&self) -> Arc<RwLock<Dependent>> {
+            fn as_dependent(&self) -> ::std::sync::Arc<::std::sync::RwLock<Dependent>> {
                 self.0.clone()
             }
-            fn as_base(&self) -> Arc<RwLock<$base>> {
+            fn as_base(&self) -> ::std::sync::Arc<::std::sync::RwLock<$base>> {
                 self.0.clone()
             }
             fn dep_id(&self) -> &'static str {
@@ -118,7 +118,7 @@ macro_rules! indep_impls_async {
 macro_rules! indep_default_new_async {
     ($imp:ident) => {
         pub fn new_dep() -> Box<Dependency> {
-            Box::new(ArcRwLockBox(Arc::new(RwLock::new(Box::new($imp::new())))))
+            Box::new(ArcRwLockBox(::std::sync::Arc::new(::std::sync::RwLock::new(Box::new($imp::new())))))
         }
     }
 }
@@ -331,10 +331,6 @@ mod tests {
         indep_impls_async!{Impl3, Base, [Trait3]}
         indep_default_new_async!{Impl3}
     }
-    
-    use std::sync::Arc;
-    use std::sync::RwLock;
-    use std::fmt::{Display,Formatter,Result};
     
     use self::t3::Trait3;
     use self::t2::Trait2;

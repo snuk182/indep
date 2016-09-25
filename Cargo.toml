@@ -1,6 +1,6 @@
 [package]
 name = "indep"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Serhii Plyhun <snuk188@gmail.com>"]
 
 description = "Depencency injection library for Rust"

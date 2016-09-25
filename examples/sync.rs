@@ -207,10 +207,6 @@ pub mod i3 {
     indep_default_new_sync!{Impl3}
 }
 
-use std::rc::Rc;
-use std::cell::RefCell;
-use std::fmt::{Display,Formatter,Result};
-
 use self::t3::Trait3;
 use self::t2::Trait2;
 use self::t1::Trait1;

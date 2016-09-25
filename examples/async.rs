@@ -207,10 +207,6 @@ pub mod i3 {
     indep_default_new_async!{Impl3}
 }
 
-use std::sync::Arc;
-use std::sync::RwLock;
-use std::fmt::{Display,Formatter,Result};
-
 use self::t3::Trait3;
 use self::t2::Trait2;
 use self::t1::Trait1;
